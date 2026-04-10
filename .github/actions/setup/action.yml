@@ -16,16 +16,16 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - uses: actions/setup-go@v5
+    - uses: actions/setup-go@v6
       with:
         go-version: 1.25
 
-    - uses: pnpm/action-setup@v3
+    - uses: pnpm/action-setup@v5
       if: ${{ inputs.frontend == 'true' }}
       with:
         version: 10
 
-    - uses: actions/setup-node@v4
+    - uses: actions/setup-node@v6
       if: ${{ inputs.frontend == 'true' }}
       with:
         node-version: 22

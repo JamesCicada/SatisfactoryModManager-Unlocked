@@ -29,14 +29,14 @@ jobs:
             goreleaser_args: "-p 1" # Wails packaging for darwin cannot handle parallel builds
     runs-on: ${{ matrix.platform.runs-on }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - uses: ./.github/actions/setup
 
       - name: Install Task
-        uses: arduino/setup-task@v2
+        uses: go-task/setup-task@v2
         with:
           version: 3.x
           repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -50,7 +50,7 @@ jobs:
 
       - name: Archive artifacts
         id: upload_artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: build-${{ matrix.platform.os }}
           path: dist/**/*
@@ -58,7 +58,7 @@ jobs:
       - name: Sign artifacts
         id: sign_windows
         if: ${{ matrix.platform.os == 'windows' && startsWith(github.ref, 'refs/tags/') }}
-        uses: signpath/github-action-submit-signing-request@v1
+        uses: signpath/github-action-submit-signing-request@v2
         with:
           api-token: '${{ secrets.SIGNPATH_API_TOKEN }}'
           organization-id: 'd1f0888a-08d3-44fe-9da0-6490890e20ea'
@@ -70,7 +70,7 @@ jobs:
 
       - name: Archive signed artifacts
         if: ${{ matrix.platform.os == 'windows' && startsWith(github.ref, 'refs/tags/') }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: build-${{ matrix.platform.os }}
           path: dist/signed/**/*
@@ -80,7 +80,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -90,19 +90,19 @@ jobs:
           frontend: false
 
       - name: Download windows artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: build-windows
           path: dist
 
       - name: Download linux artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: build-linux
           path: dist
 
       - name: Download darwin artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: build-darwin
           path: dist
@@ -115,7 +115,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Archive artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: build-all
           path: dist/**/*
