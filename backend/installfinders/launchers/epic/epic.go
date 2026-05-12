@@ -12,17 +12,9 @@ import (
 type Manifest struct {
 	CatalogNamespace string `json:"CatalogNamespace"`
 	CatalogItemID    string `json:"CatalogItemID"`
-	ManifestLocation string `json:"ManifestLocation"`
-	InstallationGUID string `json:"InstallationGUID"`
 	MainGameAppName  string `json:"MainGameAppName"`
 	AppVersionString string `json:"AppVersionString"`
 	InstallLocation  string `json:"InstallLocation"`
-}
-
-type GameManifest struct {
-	AppName          string `json:"AppName"`
-	CatalogNamespace string `json:"CatalogNamespace"`
-	CatalogItemID    string `json:"CatalogItemID"`
 }
 
 var (
@@ -85,30 +77,6 @@ func FindInstallationsEpic(epicManifestsPath string, launcher string, platform c
 		}
 
 		installLocation := platform.ProcessPath(epicManifest.InstallLocation)
-
-		gameManifestName := fmt.Sprintf("%s.mancpn", epicManifest.InstallationGUID)
-		gameManifestPath := platform.ProcessPath(filepath.Join(epicManifest.ManifestLocation, gameManifestName))
-		gameManifestData, err := os.ReadFile(gameManifestPath)
-		if err != nil {
-			findErrors = append(findErrors, fmt.Errorf("failed to read Epic game manifest %s: %w", gameManifestName, err))
-			continue
-		}
-
-		var epicGameManifest GameManifest
-		if err := json.Unmarshal(gameManifestData, &epicGameManifest); err != nil {
-			findErrors = append(findErrors, fmt.Errorf("failed to parse Epic game manifest %s: %w", gameManifestName, err))
-			continue
-		}
-
-		if epicGameManifest.CatalogNamespace != epicManifest.CatalogNamespace ||
-			epicGameManifest.CatalogItemID != epicManifest.CatalogItemID ||
-			epicGameManifest.AppName != epicManifest.MainGameAppName {
-			findErrors = append(findErrors, common.InstallFindError{
-				Path:  installLocation,
-				Inner: fmt.Errorf("mismatching manifest data"),
-			})
-			continue
-		}
 
 		existingIdx := -1
 		for i := range installs {
