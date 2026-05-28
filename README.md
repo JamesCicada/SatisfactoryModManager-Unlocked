@@ -9,7 +9,6 @@ This project is for **educational purposes only**. It demonstrates how mod manag
 - **Direct EXE Launch**: Option to launch the game executable directly instead of routing through `steam://rungameid/526870`. A toggle above the Play button lets you choose between launcher-based and direct launching.
 - **Custom Executable Selection**: Choose any game executable on your system manually, with full path validation.
 - **Broad Compatibility**: Works with any copy of Satisfactory regardless of distribution platform or launcher. As long as the game files are present on your system, SMM Unlocked can manage and launch them.
-- **Rebranded**: Application name, metadata, and GitHub links updated to reflect this fork.
 
 ## Features
 
