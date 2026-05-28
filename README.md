@@ -1,14 +1,15 @@
-# Satisfactory Mod Manager
+# SMM Unlocked
 
-Mod manager for [Satisfactory](https://www.satisfactorygame.com/).
-Handles all the steps of installing mods for you.
+A fork of [Satisfactory Mod Manager](https://github.com/satisfactorymodding/SatisfactoryModManager) that removes the Steam dependency from the game launch flow and provides full control over how the game is launched.
 
-Implemented in [Wails](https://wails.io/) using [Svelte](https://svelte.dev/) and [Skeleton](https://www.skeleton.dev/).
+This project is for **educational purposes only**. It demonstrates how mod manager applications can be modified to support alternative game acquisition methods and custom launch configurations.
 
-## Installation and Usage
+## Changes from Upstream
 
-Check the [modding documentation](https://docs.ficsit.app/satisfactory-modding/latest/index.html#_for_users)
-for installation and usage instructions.
+- **Direct EXE Launch**: Option to launch the game executable directly instead of routing through `steam://rungameid/526870`. A toggle above the Play button lets you choose between launcher-based and direct launching.
+- **Custom Executable Selection**: Choose any game executable on your system manually, with full path validation.
+- **Broad Compatibility**: Works with any copy of Satisfactory regardless of distribution platform or launcher. As long as the game files are present on your system, SMM Unlocked can manage and launch them.
+- **Rebranded**: Application name, metadata, and GitHub links updated to reflect this fork.
 
 ## Features
 
@@ -17,18 +18,13 @@ for installation and usage instructions.
 * Mod update notifications
 * Mod profiles and sharing of them
 * View the mod description in the app
+* Direct EXE launch with custom executable path selection
 
 ## Reporting issues
 
-If you have any questions or run into issues, you can ask in the
-[Satisfactory Modding discord](https://discord.gg/TShj39G)
-for quicker responses than the GitHub issues.
-If there is any error message, please include it along with the generated debug info zip.
+If you have any questions or run into issues, open an issue on [GitHub](https://github.com/JamesCicada/SatisfactoryModManager-Unlocked).
 
 ## Troubleshooting
-
-Check the [modding documentation](https://docs.ficsit.app/satisfactory-modding/latest/ForUsers/SatisfactoryModManager.html)
-for common issues and their solutions.
 
 * Profile and installation records are located in `%APPDATA%\ficsit\`
 * Downloads are cached in `%LOCALAPPDATA%\ficsit\downloadCache\`
@@ -90,7 +86,7 @@ wails build -devtools
 
 ### Linting
 
-Install `golangci-lint` via the directions [in the Golangci-lint documentation](https://golangci-lint.run/docs/welcome/install/#local-installation),
+Install `golangci-lint` via the directions [in the Golangci-lint documentation](https://golangci-lint.run/docs/help/install/#local-installation),
 but make sure to install the version specified in [`.github/workflows/push.yaml`](./.github/workflows/push.yml) instead of whatever it suggests.
 
 Then, to run it, use:
@@ -115,48 +111,18 @@ pnpm run check
 
 ### Localization
 
-If you'd like to help translate and localize SMM to different languages, join our [discord server](https://discord.ficsit.app/).
+If you'd like to help translate and localize SMM to different languages, join the [Satisfactory Modding discord](https://discord.ficsit.app/).
 
 SMM handles localization through the Tolgee Svelte integration.
 This allows for [in-context translation](https://tolgee.io/js-sdk/) - simply alt-click on a translatable element to open the Tolgee interface.
 
 In order to edit translations in-context, you will need to provide a tolgee API key with edit permissions.
-You can create an API key for yourself [in our Tolgee instance](https://translate.ficsit.app/projects/4/integrate) once you're added to the project.
+You can create an API key for yourself [in the Tolgee instance](https://translate.ficsit.app/projects/4/integrate) once you're added to the project.
 To supply this API key at development time, create or edit `/frontend/.env.local` and supply the key in a similar format as `.env`.
 
 The in-context translation screenshot feature requires installing the _Tolgee Tools_ browser extension.
 After running `wails dev`, open `http://localhost:34115/` in your browser of choice to access the application.
 
-## Code Signing Policy
+## Disclaimer
 
-<!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td colspan=3>
-      Free code signing provided by <a href="https://about.signpath.io/">SignPath.io</a>, certificate by <a href="https://signpath.org/">SignPath Foundation</a>
-    </td>
-  </tr>
-  <tr>
-    <th>
-      Committers and reviewers
-    </th>
-    <th>
-      Approvers
-    </th>
-    <th>
-      Privacy Policy
-    </th>
-  </tr>
-  <tr>
-    <td>
-      <img src="https://github.com/satisfactorymodding.png?size=24" alt="Satisfactory Modding Logo" align="center" /><a href="https://github.com/orgs/satisfactorymodding/teams/members">Organization members</a>
-    </td>
-    <td>
-      <img src="https://github.com/satisfactorymodding.png?size=24" alt="Satisfactory Modding Logo" align="center" /><a href="https://github.com/orgs/satisfactorymodding/people?query=role%3Aowner">Owners</a>
-    </td>
-    <td>
-      <a href="https://ficsit.app/privacy-policy">https://ficsit.app/privacy-policy</a>
-    </td>
-  </tr>
-</table>
-<!-- markdownlint-enable -->
+This project is provided for **educational purposes only**. The authors do not condone or encourage any illegal use of this software. Users are responsible for complying with all applicable laws and terms of service for any software they use in conjunction with this project.

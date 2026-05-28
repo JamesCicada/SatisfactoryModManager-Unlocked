@@ -433,9 +433,9 @@
       </button>
       <button
         class="btn w-full bg-surface-200-700-token px-4 h-8 text-sm"
-        on:click={() => BrowserOpenURL('https://github.com/satisfactorymodding/SatisfactoryModManager')} >
+        on:click={() => BrowserOpenURL('https://github.com/JamesCicada/SatisfactoryModManager-Unlocked')} >
         <Marquee class="flex-auto text-start">
-          <T defaultValue="SMM GitHub" keyName="left-bar.smm-github"/>
+          <T defaultValue="SMM Unlocked GitHub" keyName="left-bar.smm-github"/>
         </Marquee>
         <SvgIcon
           class="h-5 w-5"

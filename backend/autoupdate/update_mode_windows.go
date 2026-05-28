@@ -45,7 +45,7 @@ func isAllUsers() bool {
 }
 
 func getInstallPath(key registry.Key) string {
-	k, err := registry.OpenKey(key, `SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Satisfactory Mod Manager`, registry.READ)
+	k, err := registry.OpenKey(key, `SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\SMM Unlocked`, registry.READ)
 	if err != nil {
 		return ""
 	}

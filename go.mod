@@ -22,8 +22,8 @@ require (
 	github.com/shirou/gopsutil/v3 v3.24.5
 	github.com/spf13/viper v1.21.0
 	github.com/tawesoft/golib/v2 v2.16.0
-	github.com/wailsapp/go-webview2 v1.0.22
-	github.com/wailsapp/wails/v2 v2.10.2
+	github.com/wailsapp/go-webview2 v1.0.23
+	github.com/wailsapp/wails/v2 v2.12.0
 	github.com/zishang520/engine.io v1.5.12
 	github.com/zishang520/socket.io v1.3.2
 	golang.org/x/exp v0.0.0-20251009144603-d2f985daa21b
@@ -31,13 +31,12 @@ require (
 	golang.org/x/sys v0.37.0
 	gopkg.in/ini.v1 v1.67.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
-	howett.net/plist v1.0.1
+	howett.net/plist v1.0.2-0.20250314012144-ee69052608d9
 )
-
-replace github.com/wailsapp/go-webview2 => github.com/satisfactorymodding/go-webview2 v0.0.0-20241013154424-330566cba2f0
 
 require (
 	aead.dev/minisign v0.3.0 // indirect
+	git.sr.ht/~jackmordaunt/go-toast/v2 v2.0.3 // indirect
 	github.com/Khan/genqlient v0.8.1 // indirect
 	github.com/alessio/shellescape v1.4.2 // indirect
 	github.com/andybalholm/brotli v1.0.6 // indirect

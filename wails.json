@@ -1,29 +1,29 @@
 {
   "$schema": "https://wails.io/schemas/config.v2.json",
-  "name": "SatisfactoryModManager",
-  "outputfilename": "SatisfactoryModManager",
+  "name": "SMMUnlocked",
+  "outputfilename": "SMMUnlocked",
   "frontend:install": "pnpm install",
   "frontend:build": "pnpm build",
   "frontend:dev:watcher": "pnpm dev",
   "frontend:dev:serverUrl": "http://localhost:3000",
   "wailsjsdir": "frontend/src/lib/generated",
   "author": {
-    "name": "mircearoata",
-    "email": "mircearoatapalade@gmail.com"
+    "name": "JamesCicada",
+    "email": ""
   },
   "info": {
     "productVersion": "3.0.6",
     "fileAssociations": [
       {
         "ext": "smmprofile",
-        "name": "Satisfactory Mod Manager Profile",
+        "name": "SMM Unlocked Profile",
         "iconName": "smmprofile"
       }
     ],
     "protocols": [
       {
         "scheme": "smmanager",
-        "description": "Satisfactory Mod Manager"
+        "description": "SMM Unlocked"
       }
     ]
   },

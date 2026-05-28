@@ -52,7 +52,7 @@ var (
 func main() {
 	logging.Init()
 
-	slog.Info("starting Satisfactory Mod Manager", slog.String("version", version), slog.String("commit", commit), slog.String("date", date), slog.String("type", updateMode))
+	slog.Info("starting SMM Unlocked", slog.String("version", version), slog.String("commit", commit), slog.String("date", date), slog.String("type", updateMode))
 	// Set user agent for http requests from backend
 	// We cannot set the frontend's user agent, because wails does not expose that,
 	// but it does append wails.io to determine which asset requests come from inside the app, and which are external
@@ -171,7 +171,7 @@ func main() {
 
 	// Create application with options
 	err = wails.Run(&options.App{
-		Title:            "SatisfactoryModManager",
+		Title: "SMM Unlocked",
 		Frameless:        runtime.GOOS == "windows",
 		Width:            settings.Settings.UnexpandedSize.Width,
 		Height:           settings.Settings.UnexpandedSize.Height,
@@ -193,7 +193,7 @@ func main() {
 		},
 		Linux: &linux.Options{
 			Icon:             iconBytes,
-			ProgramName:      "Satisfactory Mod Manager",
+			ProgramName:      "SMM Unlocked",
 			WebviewGpuPolicy: linux.WebviewGpuPolicyNever, // https://github.com/wailsapp/wails/issues/2977
 		},
 		OnStartup: func(ctx context.Context) {
@@ -256,7 +256,7 @@ func main() {
 		}
 	}
 
-	slog.Info("exiting Satisfactory Mod Manager")
+	slog.Info("exiting SMM Unlocked")
 }
 
 func init() {
@@ -321,7 +321,7 @@ func init() {
 
 	viper.Set("websocket-port", 33642)
 
-	viper.Set("github-release-repo", "satisfactorymodding/SatisfactoryModManager")
+	viper.Set("github-release-repo", "JamesCicada/SatisfactoryModManager-Unlocked")
 
 	// logging
 

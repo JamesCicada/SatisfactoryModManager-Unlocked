@@ -77,6 +77,9 @@ type settings struct {
 	Debug bool `json:"debug,omitempty"`
 
 	NewUserSetupComplete bool `json:"newUserSetupComplete,omitempty"`
+
+	LaunchDirect     bool   `json:"launchDirect,omitempty"`
+	LaunchDirectExe string `json:"launchDirectExe,omitempty"`
 }
 
 var Settings = &settings{
@@ -111,6 +114,8 @@ var Settings = &settings{
 	Debug: false,
 
 	NewUserSetupComplete: false,
+
+	LaunchDirect: false,
 }
 
 func (s *settings) GetRestoreWindowPosition() bool {
@@ -312,6 +317,24 @@ func (s *settings) GetDebug() bool {
 func (s *settings) SetDebug(value bool) {
 	slog.Info("changing debug mode state", slog.Bool("value", value))
 	s.Debug = value
+	_ = SaveSettings()
+}
+
+func (s *settings) GetLaunchDirect() bool {
+	return s.LaunchDirect
+}
+
+func (s *settings) SetLaunchDirect(value bool) {
+	s.LaunchDirect = value
+	_ = SaveSettings()
+}
+
+func (s *settings) GetLaunchDirectExe() string {
+	return s.LaunchDirectExe
+}
+
+func (s *settings) SetLaunchDirectExe(value string) {
+	s.LaunchDirectExe = value
 	_ = SaveSettings()
 }
 

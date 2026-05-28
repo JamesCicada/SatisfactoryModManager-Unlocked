@@ -4,11 +4,14 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"os"
+	"path/filepath"
 
 	"github.com/satisfactorymodding/ficsit-cli/cli"
 	resolver "github.com/satisfactorymodding/ficsit-resolver"
 
 	"github.com/satisfactorymodding/SatisfactoryModManager/backend/installfinders/common"
+	"github.com/satisfactorymodding/SatisfactoryModManager/backend/settings"
 )
 
 func (f *ficsitCLI) initInstallations() error {
@@ -195,6 +198,23 @@ func (f *ficsitCLI) GetSelectedInstallLockfile() (*resolver.LockFile, error) {
 	return lockfile, nil
 }
 
+var directLaunchExecutables = []string{
+	"FactoryGameSteam.exe",
+	"FactoryGameEGS.exe",
+	"FactoryGame.exe",
+	"FactoryServer.exe",
+}
+
+func findGameExecutable(installPath string) (string, error) {
+	for _, exe := range directLaunchExecutables {
+		exePath := filepath.Join(installPath, exe)
+		if _, err := os.Stat(exePath); err == nil {
+			return exePath, nil
+		}
+	}
+	return "", fmt.Errorf("no game executable found in %s", installPath)
+}
+
 func (f *ficsitCLI) LaunchGame() {
 	selectedInstallation := f.GetSelectedInstall()
 	if selectedInstallation == nil {
@@ -206,6 +226,29 @@ func (f *ficsitCLI) LaunchGame() {
 		slog.Error("no metadata for installation")
 		return
 	}
+
+	if settings.Settings.LaunchDirect {
+		exePath := settings.Settings.LaunchDirectExe
+		if exePath == "" {
+			var err error
+			exePath, err = findGameExecutable(metadata.Info.Path)
+			if err != nil {
+				slog.Error("failed to find game executable for direct launch", slog.Any("error", err))
+				return
+			}
+		}
+		if _, statErr := os.Stat(exePath); statErr != nil {
+			slog.Error("game executable not found", slog.String("path", exePath), slog.Any("error", statErr))
+			return
+		}
+		out, cmd, err := f.executeLaunchCommand([]string{exePath})
+		if err != nil {
+			slog.Error("failed to launch game directly", slog.Any("error", err), slog.String("cmd", cmd), slog.String("output", string(out)))
+			return
+		}
+		return
+	}
+
 	out, cmd, err := f.executeLaunchCommand(metadata.Info.LaunchPath)
 	if err != nil {
 		slog.Error("failed to launch game", slog.Any("error", err), slog.String("cmd", cmd), slog.String("output", string(out)))

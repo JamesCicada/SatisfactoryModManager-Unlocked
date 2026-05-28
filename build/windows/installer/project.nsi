@@ -6,9 +6,9 @@ Unicode true
 
 !define UNINST_KEY_NAME "${INFO_PRODUCTNAME}"
 !define REQUEST_EXECUTION_LEVEL "user"
-!define INFO_PROJECTNAME "Satisfactory Mod Manager"
-!define INFO_COMPANYNAME "Satisfactory Modding"
-!define INFO_PRODUCTNAME "Satisfactory Mod Manager"
+!define INFO_PROJECTNAME "SMM Unlocked"
+!define INFO_COMPANYNAME "JamesCicada"
+!define INFO_PRODUCTNAME "SMM Unlocked"
 !include "wails_tools.nsh"
 
 # Convert wails defines to common names
@@ -16,7 +16,7 @@ Unicode true
 !define VERSION "${INFO_PRODUCTVERSION}"
 !define PROGEXE "${PRODUCT_EXECUTABLE}"
 !define COMPANY_NAME "${INFO_COMPANYNAME}"
-!define URL_INFO_ABOUT "https://github.com/satisfactorymodding/SatisfactoryModManager"
+!define URL_INFO_ABOUT "https://github.com/JamesCicada/SatisfactoryModManager-Unlocked"
 !define UNINSTALL_FILENAME "uninstall.exe"
 
 !define MULTIUSER_INSTALLMODE_DISPLAYNAME "${PRODUCT_NAME}"

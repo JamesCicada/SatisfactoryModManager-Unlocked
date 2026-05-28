@@ -11,6 +11,8 @@ import {
   GetKonami,
   GetLanguage,
   GetLaunchButton,
+  GetLaunchDirect,
+  GetLaunchDirectExe,
   GetModFiltersTagSearchMode,
   GetProxy,
   GetQueueAutoStart,
@@ -23,6 +25,8 @@ import {
   SetKonami,
   SetLanguage,
   SetLaunchButton,
+  SetLaunchDirect,
+  SetLaunchDirectExe,
   SetModFiltersTagSearchMode,
   SetProxy,
   SetQueueAutoStart, SetRestoreWindowPosition,
@@ -63,3 +67,7 @@ export const version = binding<string>('0.0.0', { initialGet: GetVersion });
 export const debug = bindingTwoWayNoExcept<boolean>(false, { initialGet: GetDebug }, { updateFunction: SetDebug });
 
 export const language = bindingTwoWayNoExcept<string>('en', { initialGet: () => GetLanguage().then((l) => l ? l : 'en'), allowNull: false }, { updateFunction: SetLanguage });
+
+export const launchDirect = bindingTwoWayNoExcept<boolean>(false, { initialGet: GetLaunchDirect }, { updateFunction: SetLaunchDirect });
+
+export const launchDirectExe = bindingTwoWayNoExcept<string>('', { initialGet: GetLaunchDirectExe }, { updateFunction: SetLaunchDirectExe });
