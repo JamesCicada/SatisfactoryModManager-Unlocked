@@ -26,6 +26,7 @@
     isGameRunning,
     lockfileMods,
     progress,
+    selectedInstall,
     selectedInstallMetadata,
     selectedProfile,
     selectedProfileTargets,
@@ -50,6 +51,8 @@
 
   $: isInstallLaunchable = !!$selectedInstallMetadata?.info?.launchPath || !!$launchDirectExe || (!!$selectedInstallMetadata?.info?.path && $launchDirect);
 
+  $: hasSelectedInstall = !!$selectedInstall;
+
   const directLaunchTooltip = {
     event: "hover",
     target: "direct-launch-info",
@@ -60,7 +63,7 @@
   } satisfies PopupSettings;
 
   async function browseExe() {
-    const defaultDir = $selectedInstallMetadata?.info?.path || "";
+    const defaultDir = $selectedInstallMetadata?.info?.path || $selectedInstall || "";
     const result = await OpenFileDialog({
       defaultDirectory: defaultDir,
       title: "Select Game Executable",
@@ -215,7 +218,7 @@
 </script>
 
 <div class="flex flex-col gap-1">
-  {#if $selectedInstallMetadata?.info}
+  {#if hasSelectedInstall}
     <div class="flex flex-col gap-1 px-1">
       <div class="flex items-center gap-1.5 text-xs">
         <button

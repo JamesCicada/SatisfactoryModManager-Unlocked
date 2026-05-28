@@ -221,21 +221,32 @@ func (f *ficsitCLI) LaunchGame() {
 		slog.Error("no installation selected")
 		return
 	}
+
+	// If a custom exe path was manually selected, use it directly
+	if settings.Settings.LaunchDirectExe != "" {
+		if _, statErr := os.Stat(settings.Settings.LaunchDirectExe); statErr != nil {
+			slog.Error("game executable not found", slog.String("path", settings.Settings.LaunchDirectExe), slog.Any("error", statErr))
+			return
+		}
+		out, cmd, err := f.executeLaunchCommand([]string{settings.Settings.LaunchDirectExe})
+		if err != nil {
+			slog.Error("failed to launch game directly", slog.Any("error", err), slog.String("cmd", cmd), slog.String("output", string(out)))
+			return
+		}
+		return
+	}
+
 	metadata, ok := f.installationMetadata.Load(selectedInstallation.Path)
 	if !ok || metadata.Info == nil {
 		slog.Error("no metadata for installation")
 		return
 	}
 
-	if settings.Settings.LaunchDirect || settings.Settings.LaunchDirectExe != "" {
-		exePath := settings.Settings.LaunchDirectExe
-		if exePath == "" {
-			var err error
-			exePath, err = findGameExecutable(metadata.Info.Path)
-			if err != nil {
-				slog.Error("failed to find game executable for direct launch", slog.Any("error", err))
-				return
-			}
+	if settings.Settings.LaunchDirect {
+		exePath, err := findGameExecutable(metadata.Info.Path)
+		if err != nil {
+			slog.Error("failed to find game executable for direct launch", slog.Any("error", err))
+			return
 		}
 		if _, statErr := os.Stat(exePath); statErr != nil {
 			slog.Error("game executable not found", slog.String("path", exePath), slog.Any("error", statErr))
