@@ -27,9 +27,8 @@ Unicode true
 BrandingText "${INFO_PRODUCTNAME} ${INFO_PRODUCTVERSION}"
 
 # The version information for this two must consist of 4 parts
-!include "vi_version.nsh"
-VIProductVersion "${VI_VERSION}"
-VIFileVersion    "${VI_VERSION}"
+VIProductVersion "${INFO_PRODUCTVERSION}.0"
+VIFileVersion    "${INFO_PRODUCTVERSION}.0"
 
 VIAddVersionKey "CompanyName"     "${INFO_COMPANYNAME}"
 VIAddVersionKey "FileDescription" "${INFO_PRODUCTNAME} Installer"
