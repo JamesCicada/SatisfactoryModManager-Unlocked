@@ -215,7 +215,7 @@
 </script>
 
 <div class="flex flex-col gap-1">
-  {#if isInstallLaunchable}
+  {#if $selectedInstallMetadata?.info}
     <div class="flex flex-col gap-1 px-1">
       <div class="flex items-center gap-1.5 text-xs">
         <button
