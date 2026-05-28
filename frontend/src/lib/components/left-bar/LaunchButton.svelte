@@ -48,7 +48,7 @@
   import { Apply, LaunchGame } from "$wailsjs/go/ficsitcli/ficsitCLI";
   import { OpenFileDialog } from "$wailsjs/go/app/app";
 
-  $: isInstallLaunchable = !!$selectedInstallMetadata?.info?.launchPath;
+  $: isInstallLaunchable = !!$selectedInstallMetadata?.info?.launchPath || !!$launchDirectExe || (!!$selectedInstallMetadata?.info?.path && $launchDirect);
 
   const directLaunchTooltip = {
     event: "hover",

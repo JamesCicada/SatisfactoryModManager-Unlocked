@@ -227,7 +227,7 @@ func (f *ficsitCLI) LaunchGame() {
 		return
 	}
 
-	if settings.Settings.LaunchDirect {
+	if settings.Settings.LaunchDirect || settings.Settings.LaunchDirectExe != "" {
 		exePath := settings.Settings.LaunchDirectExe
 		if exePath == "" {
 			var err error
@@ -246,6 +246,11 @@ func (f *ficsitCLI) LaunchGame() {
 			slog.Error("failed to launch game directly", slog.Any("error", err), slog.String("cmd", cmd), slog.String("output", string(out)))
 			return
 		}
+		return
+	}
+
+	if len(metadata.Info.LaunchPath) == 0 {
+		slog.Error("no launch path available for installation")
 		return
 	}
 
