@@ -115,6 +115,36 @@ func (f *ficsitCLI) SelectInstall(path string) error {
 	})
 }
 
+func (f *ficsitCLI) SetSelectedInstallPath(newPath string) error {
+	selectedInstall := f.GetSelectedInstall()
+	if selectedInstall == nil {
+		return fmt.Errorf("no installation selected")
+	}
+
+	oldPath := selectedInstall.Path
+	if oldPath == newPath {
+		return nil
+	}
+
+	// Update installation path directly
+	selectedInstall.Path = newPath
+	f.ficsitCli.Installations.SelectedInstallation = newPath
+
+	if err := f.ficsitCli.Installations.Save(); err != nil {
+		return fmt.Errorf("failed to save installations: %w", err)
+	}
+
+	// Move metadata to new path
+	f.installationMetadata.Delete(oldPath)
+	f.installationMetadata.Store(newPath, installationMetadata{
+		State: InstallStateUnknown,
+	})
+
+	f.EmitGlobals()
+	f.EmitModsChange()
+	return nil
+}
+
 func (f *ficsitCLI) GetSelectedInstall() *cli.Installation {
 	return f.ficsitCli.Installations.GetInstallation(f.ficsitCli.Installations.SelectedInstallation)
 }

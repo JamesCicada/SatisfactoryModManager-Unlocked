@@ -48,8 +48,12 @@
   } from "$lib/utils/modCompatibility";
   import { Apply, LaunchGame } from "$wailsjs/go/ficsitcli/ficsitCLI";
   import { OpenFileDialog } from "$wailsjs/go/app/app";
+  import { SetSelectedInstallPath } from "$wailsjs/go/ficsitcli/ficsitCLI";
 
-  $: isInstallLaunchable = !!$selectedInstallMetadata?.info?.launchPath || !!$launchDirectExe || (!!$selectedInstallMetadata?.info?.path && $launchDirect);
+  $: isInstallLaunchable =
+    !!$selectedInstallMetadata?.info?.launchPath ||
+    !!$launchDirectExe ||
+    (!!$selectedInstallMetadata?.info?.path && $launchDirect);
 
   $: hasSelectedInstall = !!$selectedInstall;
 
@@ -63,7 +67,9 @@
   } satisfies PopupSettings;
 
   async function browseExe() {
-    const defaultDir = $selectedInstallMetadata?.info?.path || $selectedInstall || "";
+    const defaultDir =
+      $selectedInstallMetadata?.info?.path || $selectedInstall || undefined;
+    console.log("Opening file dialog with default directory:", defaultDir);
     const result = await OpenFileDialog({
       defaultDirectory: defaultDir,
       title: "Select Game Executable",
@@ -77,6 +83,15 @@
     if (result) {
       $launchDirectExe = result;
       $launchDirect = true;
+      // Update the installation path to the exe's directory so mod management works
+      const exeDir = result.substring(0, result.lastIndexOf("\\"));
+      if (exeDir) {
+        try {
+          await SetSelectedInstallPath(exeDir);
+        } catch (e) {
+          console.warn("Failed to update install path:", e);
+        }
+      }
     }
   }
 
