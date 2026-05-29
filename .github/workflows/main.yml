@@ -3,8 +3,8 @@ name: Wails build
 on:
   push:
     tags:
-    # Match any new tag
-      - '*'
+      # Match any new tag
+      - "*"
 
 env:
   # Necessary for most environments as build failure can occur due to OOM issues
@@ -13,29 +13,35 @@ env:
 jobs:
   build:
     strategy:
-    # Failure in one platform build won't impact the others
+      # Failure in one platform build won't impact the others
       fail-fast: false
       matrix:
         build:
-          - name: 'SMM-Unlocked-Linux'
-            platform:  'linux/amd64'
-            os: 'ubuntu-latest'
-          - name: 'SMM-Unlocked-Win'
-            platform:  'windows/amd64'
-            os: 'windows-latest'
+          - name: "SMM-Unlocked-Linux"
+            platform: "linux/amd64"
+            os: "ubuntu-latest"
+          - name: "SMM-Unlocked-Win"
+            platform: "windows/amd64"
+            os: "windows-latest"
 
     runs-on: ${{ matrix.build.os }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           submodules: recursive
 
       - name: Build wails
-        uses: dAppServer/wails-build-action@v2.2
+        uses: dAppCore/build@v4.0.0
         id: build
         with:
           build-name: ${{ matrix.build.name }}
           build-platform: ${{ matrix.build.platform }}
           package: false
-          go-version: '1.20'
+          go-version: "1.20"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.build.name }}
+          path: build/bin/
