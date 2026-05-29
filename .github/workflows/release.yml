@@ -10,3 +10,4 @@ jobs:
     uses: ./.github/workflows/build-base.yml
     with:
       goreleaser_args: ''
+    secrets: inherit
