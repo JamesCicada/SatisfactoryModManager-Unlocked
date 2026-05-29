@@ -56,6 +56,8 @@ jobs:
   finalize:
     runs-on: ubuntu-latest
     needs: build
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v6
         with:
