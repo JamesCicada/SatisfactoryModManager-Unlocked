@@ -65,7 +65,7 @@ export const favoriteMods = binding<string[]>([], { initialGet: GetFavoriteMods,
 export const isGameRunning = binding(false, { updateEvent: 'isGameRunning', allowNull: false });
 
 export const canModify = derived([isGameRunning, progress, isLaunchingGame, installs, selectedInstallMetadata, queuedMods], ([$isGameRunning, $progress, $isLaunchingGame, $installs, $selectedInstallMetadata, $queuedMods]) => {
-  return !$isGameRunning && !$progress && !$isLaunchingGame && $installs.length > 0 && $selectedInstallMetadata?.state === ficsitcli.InstallState.VALID && $queuedMods.length <= 0;
+  return !$isGameRunning && !$progress && !$isLaunchingGame && $installs.length > 0 && ($selectedInstallMetadata?.state === ficsitcli.InstallState.VALID || $selectedInstallMetadata?.state === ficsitcli.InstallState.UNKNOWN) && $queuedMods.length <= 0;
 });
 
 export const canChangeInstall = derived([isGameRunning, progress, isLaunchingGame, installs, queuedMods], ([$isGameRunning, $progress, $isLaunchingGame, $installs, $queuedMods]) => {
@@ -73,7 +73,7 @@ export const canChangeInstall = derived([isGameRunning, progress, isLaunchingGam
 });
 
 export const canInstallMods = derived([isGameRunning, isLaunchingGame, installs, selectedInstallMetadata], ([$isGameRunning, $isLaunchingGame, $installs, $selectedInstallMetadata]) => {
-  return !$isGameRunning && !$isLaunchingGame && $installs.length > 0 && $selectedInstallMetadata?.state === ficsitcli.InstallState.VALID;
+  return !$isGameRunning && !$isLaunchingGame && $installs.length > 0 && ($selectedInstallMetadata?.state === ficsitcli.InstallState.VALID || $selectedInstallMetadata?.state === ficsitcli.InstallState.UNKNOWN);
 });
 
 export const updates = writable<ficsitcli.Update[]>([]);

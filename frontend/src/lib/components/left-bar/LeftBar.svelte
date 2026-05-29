@@ -199,7 +199,7 @@
               {:else if $installsMetadata[item]?.state === ficsitcli.InstallState.INVALID}
                 <T defaultValue="Invalid" keyName="left-bar.install-invalid"/>
               {:else}
-                <T defaultValue="Unknown" keyName="left-bar.install-unknown"/>
+                <T defaultValue="Custom" keyName="left-bar.install-custom"/>
               {/if}
             </span>
           </svelte:fragment>
@@ -219,7 +219,7 @@
                   </span>
                 {:else}
                   <span>
-                    <T defaultValue="Status: Could not get information about this install" keyName="left-bar.install-unknown-tooltip"/>
+                    <T defaultValue="Status: Manually configured installation" keyName="left-bar.install-custom-tooltip"/>
                   </span>
                 {/if}
               </div>
