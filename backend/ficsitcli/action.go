@@ -195,7 +195,8 @@ func (f *ficsitCLI) getInstallsToApply() ([]installWithTarget, *cli.Profile, err
 		if i.Profile == selectedProfile && (!i.Vanilla || i == selectedInstall) {
 			platform, err := i.GetPlatform(f.ficsitCli)
 			if err != nil {
-				return nil, nil, fmt.Errorf("failed to get platform: %w", err)
+				slog.Warn("skipping install, could not detect platform", slog.String("install", install), slog.Any("error", err))
+				continue
 			}
 			installsUsingProfile = append(installsUsingProfile, installWithTarget{
 				install:    i,
