@@ -3,6 +3,7 @@ package app
 import (
 	"fmt"
 	"log/slog"
+	"os"
 	"os/exec"
 	"runtime"
 
@@ -61,8 +62,15 @@ func (a *app) OpenFileDialog(options OpenDialogOptions) (string, error) {
 			Pattern:     filter.Pattern,
 		}
 	}
+	defaultDirectory := options.DefaultDirectory
+	if defaultDirectory != "" {
+		if _, err := os.Stat(defaultDirectory); os.IsNotExist(err) {
+			slog.Warn("default directory does not exist, falling back to OS default", slog.String("path", defaultDirectory))
+			defaultDirectory = ""
+		}
+	}
 	wailsOptions := wailsRuntime.OpenDialogOptions{
-		DefaultDirectory:           options.DefaultDirectory,
+		DefaultDirectory:           defaultDirectory,
 		DefaultFilename:            options.DefaultFilename,
 		Title:                      options.Title,
 		Filters:                    wailsFilters,
@@ -86,8 +94,15 @@ func (a *app) OpenDirectoryDialog(options OpenDialogOptions) (string, error) {
 			Pattern:     filter.Pattern,
 		}
 	}
+	defaultDirectory := options.DefaultDirectory
+	if defaultDirectory != "" {
+		if _, err := os.Stat(defaultDirectory); os.IsNotExist(err) {
+			slog.Warn("default directory does not exist, falling back to OS default", slog.String("path", defaultDirectory))
+			defaultDirectory = ""
+		}
+	}
 	wailsOptions := wailsRuntime.OpenDialogOptions{
-		DefaultDirectory:           options.DefaultDirectory,
+		DefaultDirectory:           defaultDirectory,
 		DefaultFilename:            options.DefaultFilename,
 		Title:                      options.Title,
 		Filters:                    wailsFilters,
