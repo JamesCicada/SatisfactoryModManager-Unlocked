@@ -3,6 +3,8 @@ package ficsitcli
 import (
 	"fmt"
 	"log/slog"
+	"os"
+	"path/filepath"
 	"slices"
 	"sync"
 	"time"
@@ -174,6 +176,11 @@ func (f *ficsitCLI) WipeMods(includeRemote bool) error {
 		err := i.Wipe()
 		if err != nil {
 			return fmt.Errorf("failed to wipe installation %s: %w", i.Path, err)
+		}
+
+		disabledDir := filepath.Join(i.BasePath(), "FactoryGame", "disabledMods")
+		if err := os.RemoveAll(disabledDir); err != nil {
+			slog.Warn("failed to remove disabled mods directory", slog.String("path", disabledDir), slog.Any("error", err))
 		}
 	}
 	return nil

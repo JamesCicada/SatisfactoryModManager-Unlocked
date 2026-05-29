@@ -97,6 +97,19 @@ func (f *ficsitCLI) apply(l *slog.Logger, taskChannel chan<- taskUpdate) error {
 		return err
 	}
 
+	// Move mods between Mods and disabledMods before running Install()
+	for _, installTarget := range installsToApply {
+		if installTarget.install.Vanilla {
+			if err := moveModsToDisabled(installTarget.install); err != nil {
+				l.Error("failed to move mods to disabled", slog.String("install", installTarget.install.Path), slog.Any("error", err))
+			}
+		} else {
+			if err := restoreModsFromDisabled(installTarget.install); err != nil {
+				l.Error("failed to restore mods from disabled", slog.String("install", installTarget.install.Path), slog.Any("error", err))
+			}
+		}
+	}
+
 	targetsUsingProfile := make(map[resolver.TargetName]bool)
 	for _, install := range installsToApply {
 		targetsUsingProfile[resolver.TargetName(install.targetName)] = true
@@ -154,6 +167,13 @@ func (f *ficsitCLI) apply(l *slog.Logger, taskChannel chan<- taskUpdate) error {
 				}
 				return installErr //nolint:wrapcheck
 			}
+
+			if installTarget.install.Vanilla {
+				if err := cleanDisabledMods(installTarget.install, profile.Mods); err != nil {
+					l.Error("failed to clean disabled mods", slog.String("install", installTarget.install.Path), slog.Any("error", err))
+				}
+			}
+
 			return nil
 		})
 	}
