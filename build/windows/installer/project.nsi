@@ -85,7 +85,7 @@ VIAddVersionKey "ProductName"     "${INFO_PRODUCTNAME}"
 !insertmacro MUI_RESERVEFILE_LANGDLL
 
 Name "${INFO_PRODUCTNAME}"
-OutFile "..\..\bin\SatisfactoryModManager-Setup.exe"
+OutFile "..\..\bin\SMMUnlocked-Setup.exe"
 ShowInstDetails show
 
 Function .onInit

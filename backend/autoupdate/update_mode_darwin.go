@@ -7,9 +7,9 @@ import (
 func init() {
 	registerUpdateType("standalone", func() UpdateType {
 		return UpdateType{
-			ArtifactName: "SatisfactoryModManager_darwin_universal.zip",
+			ArtifactName: "SMMUnlocked_darwin_universal.zip",
 			Apply: apply.MakeDarwinAppApply(apply.DarwinApplyConfig{
-				AppName: "SatisfactoryModManager",
+				AppName: "SMMUnlocked",
 			}),
 		}
 	})

@@ -7,13 +7,13 @@ import (
 func init() {
 	registerUpdateType("standalone", func() UpdateType {
 		return UpdateType{
-			ArtifactName: "SatisfactoryModManager_linux_amd64",
+			ArtifactName: "SMMUnlocked_linux_amd64",
 			Apply:        apply.MakeSingleFileApply(),
 		}
 	})
 	registerUpdateType("appimage", func() UpdateType {
 		return UpdateType{
-			ArtifactName: "SatisfactoryModManager_linux_amd64.AppImage",
+			ArtifactName: "SMMUnlocked_linux_amd64.AppImage",
 			Apply:        apply.MakeAppImageApply(),
 		}
 	})

@@ -20,9 +20,9 @@ func init() {
 	// })
 	registerUpdateType("nsis", func() UpdateType {
 		return UpdateType{
-			ArtifactName: "SatisfactoryModManager-Setup.exe",
+			ArtifactName: "SMMUnlocked-Setup.exe",
 			Apply: apply.MakeNsisApply(apply.NsisApplyConfig{
-				InstallerDownloadPath: filepath.Join(viper.GetString("smm-cache-dir"), "SatisfactoryModManager-Setup.exe"),
+				InstallerDownloadPath: filepath.Join(viper.GetString("smm-cache-dir"), "SMMUnlocked-Setup.exe"),
 				IsAllUsers:            isAllUsers(),
 			}),
 		}
