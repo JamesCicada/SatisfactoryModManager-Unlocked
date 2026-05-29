@@ -78,7 +78,7 @@ type settings struct {
 
 	NewUserSetupComplete bool `json:"newUserSetupComplete,omitempty"`
 
-	LaunchDirect     bool   `json:"launchDirect,omitempty"`
+	LaunchDirect    bool   `json:"launchDirect,omitempty"`
 	LaunchDirectExe string `json:"launchDirectExe,omitempty"`
 }
 
