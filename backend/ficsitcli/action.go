@@ -188,7 +188,7 @@ func (f *ficsitCLI) getInstallsToApply() ([]installWithTarget, *cli.Profile, err
 		if !ok {
 			continue
 		}
-		if meta.State != InstallStateValid {
+		if meta.State != InstallStateValid && meta.State != InstallStateUnknown {
 			continue
 		}
 		i := f.GetInstallation(install)
