@@ -63,12 +63,10 @@ func (f *ficsitCLI) initLocalInstallationsMetadata() error {
 func (f *ficsitCLI) initRemoteServerInstallationsMetadata() {
 	installationsToCheck := make([]*cli.Installation, 0, len(f.ficsitCli.Installations.Installations))
 	for _, installation := range f.ficsitCli.Installations.Installations {
-		if meta, ok := f.installationMetadata.Load(installation.Path); ok {
-			if meta.State != InstallStateUnknown {
+		if _, ok := f.installationMetadata.Load(installation.Path); ok {
 				// Already have metadata for this install
 				continue
 			}
-		}
 		installationsToCheck = append(installationsToCheck, installation)
 	}
 
@@ -109,9 +107,9 @@ func (f *ficsitCLI) fetchRemoteInstallationMetadata(installation *cli.Installati
 	meta, err := f.getRemoteServerMetadata(installation)
 	if err != nil {
 		if errors.Is(err, ErrInstallNotServer) {
-			// If this installation is not a server, it is invalid
+			// If this installation is not a server, keep it as unknown
 			f.installationMetadata.Store(installation.Path, installationMetadata{
-				State: InstallStateInvalid,
+				State: InstallStateUnknown,
 			})
 			return
 		}
